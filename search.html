@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Agriculture Search - Find information about crops, farming techniques, and agricultural solutions">
+    <title>Search - Smart Agriculture</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <label class="logo">AGRI.KRO</label>
+      <div class="checkbtn" id="menubtn">&#9776;</div>
+      <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="sign-in.html">SIGN IN</a></li>
+        <li><a href="login.html">LOGIN</a></li>
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="search.html" class="active">SEARCH</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="search-section">
+      <div class="search-container">
+        <h1>Search Agricultural Knowledge</h1>
+        <p class="search-intro">Find information about crops, farming techniques, pest control, irrigation methods, and more.</p>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQDiMxbfgpObepG3DfzFXHWkqW4lEKhqbEME2zh9in9rKqcMNPp9URLWfAYLRqG55trxW_xmRMe-msW/pubhtml?widget=true&amp;headers=false"></iframe>
+        <form class="search-form" id="searchForm">
+          <div class="search-input-container">
+            <input type="text" name="query" id="searchQuery" placeholder="Enter crop name, farming technique, or issue" required>
+            <select name="category" id="searchCategory">
+              <option value="all">All Categories</option>
+              <option value="crops">Crops</option>
+              <option value="pests">Pest Control</option>
+              <option value="irrigation">Irrigation</option>
+              <option value="fertilizer">Fertilizers</option>
+              <option value="techniques">Farming Techniques</option>
+            </select>
+          </div>
+          <button type="submit" class="search-button">Search</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="popular-searches">
+      <h2>Popular Topics</h2>
+      <div class="search-topics">
+        <div class="topic-card">
+          <h3>Sustainable Farming</h3>
+          <p>Explore eco-friendly farming practices that reduce environmental impact while maintaining productivity.</p>
+          <a href="#" class="topic-link" data-search="sustainable farming">Learn More</a>
+        </div>
+        <div class="topic-card">
+          <h3>Organic Pest Control</h3>
+          <p>Discover natural methods to control pests without harmful chemicals.</p>
+          <a href="#" class="topic-link" data-search="organic pest control">Learn More</a>
+        </div>
+        <div class="topic-card">
+          <h3>Water Conservation</h3>
+          <p>Learn about efficient irrigation techniques to save water in agriculture.</p>
+          <a href="#" class="topic-link" data-search="water conservation agriculture">Learn More</a>
+        </div>
+        <div class="topic-card">
+          <h3>Soil Health</h3>
+          <p>Understand how to maintain and improve soil fertility for better crop yields.</p>
+          <a href="#" class="topic-link" data-search="soil health improvement">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="search-results" id="searchResults">
+      <h2>Search Results</h2>
+      <div class="results-container" id="resultsContainer">
+        <!-- Results will be displayed here via JavaScript -->
+        <p class="no-results">Enter a search term to see results</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 AGRI.KRO - Smart Agriculture Solutions. All rights reserved.</p>
+  </footer>
+
+  <script src="java.js"></script>
+  <script>
+    // Sample search data for demonstration
+    const agriculturalData = [
+      {
+        title: "Rice Cultivation Techniques",
+        category: "crops",
+        content: "Rice is a staple food crop grown in flooded fields called paddies. It requires warm temperatures and abundant water. Modern techniques include SRI (System of Rice Intensification) which uses less water and increases yields."
+      },
+      {
+        title: "Drip Irrigation Systems",
+        category: "irrigation",
+        content: "Drip irrigation delivers water directly to plant roots, reducing water waste through evaporation. It's ideal for row crops, vineyards, orchards, and gardens in arid regions."
+      },
+      {
+        title: "Organic Composting",
+        category: "fertilizer",
+        content: "Composting transforms organic waste into nutrient-rich soil amendment. It improves soil structure, adds beneficial microorganisms, and reduces the need for chemical fertilizers."
+      },
+      {
+        title: "Integrated Pest Management",
+        category: "pests",
+        content: "IPM combines biological, cultural, physical, and chemical tools to minimize economic, health, and environmental risks from pests. It focuses on long-term prevention rather than elimination."
+      },
+      {
+        title: "Crop Rotation Benefits",
+        category: "techniques",
+        content: "Rotating crops helps break pest cycles, improves soil health, and optimizes nutrient use. Different plant families should be rotated to maximize benefits."
+      },
+      {
+        title: "Wheat Growing Guide",
+        category: "crops",
+        content: "Wheat thrives in temperate climates with 12-15 inches of annual rainfall. Plant in fall for winter wheat or spring for spring wheat. Proper timing and soil preparation are essential for good yields."
+      },
+      {
+        title: "Rainwater Harvesting",
+        category: "irrigation",
+        content: "Collecting and storing rainwater for agricultural use reduces dependence on groundwater. Systems range from simple barrels to complex cisterns with filtration."
+      },
+      {
+        title: "Natural Aphid Control",
+        category: "pests",
+        content: "Control aphids naturally by introducing ladybugs and lacewings, spraying with neem oil, or using soap sprays. Companion planting with marigolds and nasturtiums also deters aphids."
+      }
+    ];
+
+    // Search functionality
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const query = document.getElementById('searchQuery').value.toLowerCase();
+      const category = document.getElementById('searchCategory').value;
+      const resultsContainer = document.getElementById('resultsContainer');
+      
+      // Filter results based on search query and category
+      let results = agriculturalData.filter(item => {
+        const matchesQuery = item.title.toLowerCase().includes(query) || 
+                            item.content.toLowerCase().includes(query);
+        const matchesCategory = category === 'all' || item.category === category;
+        return matchesQuery && matchesCategory;
+      });
+      
+      // Display results
+      if (results.length > 0) {
+        resultsContainer.innerHTML = results.map(item => `
+          <div class="result-item">
+            <h3>${item.title}</h3>
+            <span class="result-category">${item.category}</span>
+            <p>${item.content}</p>
+          </div>
+        `).join('');
+      } else {
+        resultsContainer.innerHTML = '<p class="no-results">No results found. Try different keywords or categories.</p>';
+      }
+      
+      // Scroll to results
+      document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Popular topic links
+    document.querySelectorAll('.topic-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const searchTerm = this.getAttribute('data-search');
+        document.getElementById('searchQuery').value = searchTerm;
+        document.getElementById('searchCategory').value = 'all';
+        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+      });
+    });
+  </script>
+</body>

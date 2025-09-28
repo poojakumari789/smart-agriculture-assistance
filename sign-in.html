@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Smart Agriculture</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <label class="logo">AGRI.KRO</label>
+      <div class="checkbtn" id="menubtn">&#9776;</div>
+      <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a class="active" href="sign-in.html">SIGN IN</a></li>
+        <li><a href="login.html">LOGIN</a></li>
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="search.html">SEARCH</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="sign-in-form">
+      <h2>Create an Account</h2>
+      <form id="signup-form">
+        <div class="form-group">
+          <label for="fullname">Full Name:</label>
+          <input type="text" id="fullname" name="fullname" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+          <div class="password-toggle">
+            <input type="checkbox" id="show-password">
+            <label for="show-password">Show Password</label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" id="confirm-password" name="confirm-password" required>
+        </div>
+        
+        <button type="submit" id="signup-btn">Sign Up</button>
+        
+        <div class="login-link">
+          Already have an account? <a href="login.html">Login here</a>
+        </div>
+      </form>
+      <div id="success-message" class="success-message" style="display: none;">
+        Account created successfully! Redirecting to login page...
+      </div>
+    </div>
+  </main>
+  
+  <footer>
+    <p>Copyright &copy; 2024 AGRI.KRO</p>
+  </footer>
+  
+  <script src="java.js"></script>
+  <script>
+    // Additional signup form validation
+    document.addEventListener('DOMContentLoaded', () => {
+      const signupForm = document.getElementById('signup-form');
+      
+      if (signupForm) {
+        signupForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirm-password').value;
+          
+          // Remove existing error messages
+          const existingErrors = document.querySelectorAll('.error');
+          existingErrors.forEach(error => error.remove());
+          
+          // Reset error styling
+          document.querySelectorAll('input').forEach(input => {
+            input.classList.remove('error-input');
+          });
+          
+          // Check if passwords match
+          if (password !== confirmPassword) {
+            const confirmPasswordInput = document.getElementById('confirm-password');
+            confirmPasswordInput.classList.add('error-input');
+            
+            const errorMsg = document.createElement('span');
+            errorMsg.className = 'error';
+            errorMsg.textContent = 'Passwords do not match';
+            
+            confirmPasswordInput.parentNode.insertBefore(errorMsg, confirmPasswordInput.nextSibling);
+            return;
+          }
+          
+          // Simulate successful signup
+          signupForm.style.display = 'none';
+          document.getElementById('success-message').style.display = 'block';
+          
+          // Redirect to login page after 2 seconds
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 2000);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

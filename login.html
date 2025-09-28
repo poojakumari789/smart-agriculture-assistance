@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Agriculture</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <label class="logo">AGRI.KRO</label>
+      <div class="checkbtn" id="menubtn">&#9776;</div>
+      <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="sign-in.html">SIGN IN</a></li>
+        <li><a class="active" href="login.html">LOGIN</a></li>
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="search.html">SEARCH</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="log-in-form">
+      <h2>Login</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+          <div class="password-toggle">
+            <input type="checkbox" id="show-password">
+            <label for="show-password">Show Password</label>
+          </div>
+        </div>
+        
+        <div class="forgot-password">
+          <a href="/forgot-password.html">Forgot Password?</a>
+        </div>
+        
+        <button type="submit" id="login-btn">Login</button>
+        
+        <div class="signup-link">
+          Don't have an account? <a href="sign-in.html">Sign up here</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  
+  <footer>
+    <p>Copyright &copy; 2024 AGRI.KRO</p>
+  </footer>
+  
+  <script src="java.js"></script>
+  <script>
+    // Login form functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('login-form');
+      
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          // Get form values
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          
+          // Remove existing error messages
+          const existingErrors = document.querySelectorAll('.error');
+          existingErrors.forEach(error => error.remove());
+          
+          // Reset error styling
+          document.querySelectorAll('input').forEach(input => {
+            input.classList.remove('error-input');
+          });
+          
+          // Simple validation (for demo purposes)
+          if (username && password) {
+            // Simulate successful login
+            // In a real application, you would send these credentials to a server
+            
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'success-message';
+            successMsg.textContent = 'Login successful! Redirecting to dashboard...';
+            
+            // Hide the form and show success message
+            loginForm.style.display = 'none';
+            loginForm.parentNode.appendChild(successMsg);
+            
+            // Redirect to home page after 2 seconds
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 2000);
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
